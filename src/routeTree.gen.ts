@@ -17,8 +17,6 @@ import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedNovaReceitaRouteImport } from './routes/_authenticated.nova-receita'
 import { Route as AuthenticatedMinhasReceitasRouteImport } from './routes/_authenticated.minhas-receitas'
 import { Route as AuthenticatedCategoriasRouteImport } from './routes/_authenticated.categorias'
-import { Route as ReceitaRouteImport } from './routes/receita.'
-import { Route as AuthenticatedEditarReceitaRouteImport } from './routes/_authenticated.editar-receita.'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -61,39 +59,24 @@ const AuthenticatedCategoriasRoute = AuthenticatedCategoriasRouteImport.update({
   path: '/categorias',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
-const ReceitaRoute = ReceitaRouteImport.update({
-  id: '/receita/',
-  path: '/receita/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedEditarReceitaRoute =
-  AuthenticatedEditarReceitaRouteImport.update({
-    id: '/editar-receita/',
-    path: '/editar-receita/',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/login': typeof LoginRoute
-  '/receita/': typeof ReceitaRoute
   '/categorias': typeof AuthenticatedCategoriasRoute
   '/minhas-receitas': typeof AuthenticatedMinhasReceitasRoute
   '/nova-receita': typeof AuthenticatedNovaReceitaRoute
   '/perfil': typeof AuthenticatedPerfilRoute
-  '/editar-receita/': typeof AuthenticatedEditarReceitaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/login': typeof LoginRoute
-  '/receita': typeof ReceitaRoute
   '/categorias': typeof AuthenticatedCategoriasRoute
   '/minhas-receitas': typeof AuthenticatedMinhasReceitasRoute
   '/nova-receita': typeof AuthenticatedNovaReceitaRoute
   '/perfil': typeof AuthenticatedPerfilRoute
-  '/editar-receita': typeof AuthenticatedEditarReceitaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -101,12 +84,10 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/login': typeof LoginRoute
-  '/receita/': typeof ReceitaRoute
   '/_authenticated/categorias': typeof AuthenticatedCategoriasRoute
   '/_authenticated/minhas-receitas': typeof AuthenticatedMinhasReceitasRoute
   '/_authenticated/nova-receita': typeof AuthenticatedNovaReceitaRoute
   '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
-  '/_authenticated/editar-receita/': typeof AuthenticatedEditarReceitaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -114,35 +95,29 @@ export interface FileRouteTypes {
     | '/'
     | '/cadastro'
     | '/login'
-    | '/receita/'
     | '/categorias'
     | '/minhas-receitas'
     | '/nova-receita'
     | '/perfil'
-    | '/editar-receita/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/cadastro'
     | '/login'
-    | '/receita'
     | '/categorias'
     | '/minhas-receitas'
     | '/nova-receita'
     | '/perfil'
-    | '/editar-receita'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/cadastro'
     | '/login'
-    | '/receita/'
     | '/_authenticated/categorias'
     | '/_authenticated/minhas-receitas'
     | '/_authenticated/nova-receita'
     | '/_authenticated/perfil'
-    | '/_authenticated/editar-receita/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -150,7 +125,6 @@ export interface RootRouteChildren {
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   CadastroRoute: typeof CadastroRoute
   LoginRoute: typeof LoginRoute
-  ReceitaRoute: typeof ReceitaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -211,20 +185,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCategoriasRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/receita/': {
-      id: '/receita/'
-      path: '/receita'
-      fullPath: '/receita/'
-      preLoaderRoute: typeof ReceitaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated/editar-receita/': {
-      id: '/_authenticated/editar-receita/'
-      path: '/editar-receita'
-      fullPath: '/editar-receita/'
-      preLoaderRoute: typeof AuthenticatedEditarReceitaRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
   }
 }
 
@@ -233,7 +193,6 @@ interface AuthenticatedRouteChildren {
   AuthenticatedMinhasReceitasRoute: typeof AuthenticatedMinhasReceitasRoute
   AuthenticatedNovaReceitaRoute: typeof AuthenticatedNovaReceitaRoute
   AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
-  AuthenticatedEditarReceitaRoute: typeof AuthenticatedEditarReceitaRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -241,7 +200,6 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedMinhasReceitasRoute: AuthenticatedMinhasReceitasRoute,
   AuthenticatedNovaReceitaRoute: AuthenticatedNovaReceitaRoute,
   AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
-  AuthenticatedEditarReceitaRoute: AuthenticatedEditarReceitaRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -253,7 +211,6 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   CadastroRoute: CadastroRoute,
   LoginRoute: LoginRoute,
-  ReceitaRoute: ReceitaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
