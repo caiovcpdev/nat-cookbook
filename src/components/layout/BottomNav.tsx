@@ -1,14 +1,16 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, BookOpen, Plus, FolderHeart, User } from "lucide-react";
+import { Home, BookOpen, Plus, FolderHeart, User, type LucideIcon } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
 
-const guestItems = [
+type NavItem = { to: string; label: string; icon: LucideIcon; highlight?: boolean };
+
+const guestItems: NavItem[] = [
   { to: "/", label: "Início", icon: Home },
   { to: "/login", label: "Entrar", icon: User },
 ];
 
-const authItems = [
+const authItems: NavItem[] = [
   { to: "/", label: "Início", icon: Home },
   { to: "/minhas-receitas", label: "Minhas", icon: BookOpen },
   { to: "/nova-receita", label: "Nova", icon: Plus, highlight: true },
