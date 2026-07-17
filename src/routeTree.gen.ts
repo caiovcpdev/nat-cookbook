@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReceitaRouteImport } from './routes/receita.'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -28,35 +29,44 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReceitaRoute = ReceitaRouteImport.update({
+  id: '/receita/',
+  path: '/receita/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/login': typeof LoginRoute
+  '/receita/': typeof ReceitaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/login': typeof LoginRoute
+  '/receita': typeof ReceitaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/login': typeof LoginRoute
+  '/receita/': typeof ReceitaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/cadastro' | '/login'
+  fullPaths: '/' | '/cadastro' | '/login' | '/receita/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/cadastro' | '/login'
-  id: '__root__' | '/' | '/cadastro' | '/login'
+  to: '/' | '/cadastro' | '/login' | '/receita'
+  id: '__root__' | '/' | '/cadastro' | '/login' | '/receita/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CadastroRoute: typeof CadastroRoute
   LoginRoute: typeof LoginRoute
+  ReceitaRoute: typeof ReceitaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/receita/': {
+      id: '/receita/'
+      path: '/receita'
+      fullPath: '/receita/'
+      preLoaderRoute: typeof ReceitaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CadastroRoute: CadastroRoute,
   LoginRoute: LoginRoute,
+  ReceitaRoute: ReceitaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

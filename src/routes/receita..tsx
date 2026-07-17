@@ -16,7 +16,7 @@ import { useReceita } from "@/hooks/useReceitas";
 import { DIFICULDADE_LABEL } from "@/constants";
 import { formatTempo } from "@/utils/format";
 
-export const Route = createFileRoute("/receita/$id")({
+export const Route = createFileRoute("/receita/")({
   head: ({ params }) => ({
     meta: [{ title: `Receita #${params.id} — Colher & Casa` }],
   }),
