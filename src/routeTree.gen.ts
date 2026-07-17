@@ -11,7 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as CadastroRouteImport } from './routes/cadastro'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated.perfil'
+import { Route as AuthenticatedMinhasReceitasRouteImport } from './routes/_authenticated.minhas-receitas'
 import { Route as ReceitaRouteImport } from './routes/receita.'
 
 const LoginRoute = LoginRouteImport.update({
@@ -24,11 +27,26 @@ const CadastroRoute = CadastroRouteImport.update({
   path: '/cadastro',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedMinhasReceitasRoute =
+  AuthenticatedMinhasReceitasRouteImport.update({
+    id: '/minhas-receitas',
+    path: '/minhas-receitas',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const ReceitaRoute = ReceitaRouteImport.update({
   id: '/receita/',
   path: '/receita/',
@@ -40,30 +58,52 @@ export interface FileRoutesByFullPath {
   '/cadastro': typeof CadastroRoute
   '/login': typeof LoginRoute
   '/receita/': typeof ReceitaRoute
+  '/minhas-receitas': typeof AuthenticatedMinhasReceitasRoute
+  '/perfil': typeof AuthenticatedPerfilRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/login': typeof LoginRoute
   '/receita': typeof ReceitaRoute
+  '/minhas-receitas': typeof AuthenticatedMinhasReceitasRoute
+  '/perfil': typeof AuthenticatedPerfilRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/login': typeof LoginRoute
   '/receita/': typeof ReceitaRoute
+  '/_authenticated/minhas-receitas': typeof AuthenticatedMinhasReceitasRoute
+  '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/cadastro' | '/login' | '/receita/'
+  fullPaths:
+    | '/'
+    | '/cadastro'
+    | '/login'
+    | '/receita/'
+    | '/minhas-receitas'
+    | '/perfil'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/cadastro' | '/login' | '/receita'
-  id: '__root__' | '/' | '/cadastro' | '/login' | '/receita/'
+  to: '/' | '/cadastro' | '/login' | '/receita' | '/minhas-receitas' | '/perfil'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/cadastro'
+    | '/login'
+    | '/receita/'
+    | '/_authenticated/minhas-receitas'
+    | '/_authenticated/perfil'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   CadastroRoute: typeof CadastroRoute
   LoginRoute: typeof LoginRoute
   ReceitaRoute: typeof ReceitaRoute
@@ -85,12 +125,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CadastroRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/perfil': {
+      id: '/_authenticated/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof AuthenticatedPerfilRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/minhas-receitas': {
+      id: '/_authenticated/minhas-receitas'
+      path: '/minhas-receitas'
+      fullPath: '/minhas-receitas'
+      preLoaderRoute: typeof AuthenticatedMinhasReceitasRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/receita/': {
       id: '/receita/'
@@ -102,8 +163,23 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedMinhasReceitasRoute: typeof AuthenticatedMinhasReceitasRoute
+  AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedMinhasReceitasRoute: AuthenticatedMinhasReceitasRoute,
+  AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   CadastroRoute: CadastroRoute,
   LoginRoute: LoginRoute,
   ReceitaRoute: ReceitaRoute,
