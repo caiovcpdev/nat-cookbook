@@ -13,6 +13,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReceitaIdRouteImport } from './routes/receita.$id'
 import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated.perfil'
 import { Route as AuthenticatedNovaReceitaRouteImport } from './routes/_authenticated.nova-receita'
 import { Route as AuthenticatedMinhasReceitasRouteImport } from './routes/_authenticated.minhas-receitas'
@@ -35,6 +36,11 @@ const AuthenticatedRoute = AuthenticatedRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReceitaIdRoute = ReceitaIdRouteImport.update({
+  id: '/receita/$id',
+  path: '/receita/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/minhas-receitas': typeof AuthenticatedMinhasReceitasRoute
   '/nova-receita': typeof AuthenticatedNovaReceitaRoute
   '/perfil': typeof AuthenticatedPerfilRoute
+  '/receita/$id': typeof ReceitaIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -77,6 +84,7 @@ export interface FileRoutesByTo {
   '/minhas-receitas': typeof AuthenticatedMinhasReceitasRoute
   '/nova-receita': typeof AuthenticatedNovaReceitaRoute
   '/perfil': typeof AuthenticatedPerfilRoute
+  '/receita/$id': typeof ReceitaIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -88,6 +96,7 @@ export interface FileRoutesById {
   '/_authenticated/minhas-receitas': typeof AuthenticatedMinhasReceitasRoute
   '/_authenticated/nova-receita': typeof AuthenticatedNovaReceitaRoute
   '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
+  '/receita/$id': typeof ReceitaIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/minhas-receitas'
     | '/nova-receita'
     | '/perfil'
+    | '/receita/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
     | '/minhas-receitas'
     | '/nova-receita'
     | '/perfil'
+    | '/receita/$id'
   id:
     | '__root__'
     | '/'
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/_authenticated/minhas-receitas'
     | '/_authenticated/nova-receita'
     | '/_authenticated/perfil'
+    | '/receita/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -125,6 +137,7 @@ export interface RootRouteChildren {
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   CadastroRoute: typeof CadastroRoute
   LoginRoute: typeof LoginRoute
+  ReceitaIdRoute: typeof ReceitaIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -155,6 +168,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/receita/$id': {
+      id: '/receita/$id'
+      path: '/receita/$id'
+      fullPath: '/receita/$id'
+      preLoaderRoute: typeof ReceitaIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/perfil': {
@@ -211,6 +231,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   CadastroRoute: CadastroRoute,
   LoginRoute: LoginRoute,
+  ReceitaIdRoute: ReceitaIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
