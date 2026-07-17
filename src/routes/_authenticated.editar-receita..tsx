@@ -11,7 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useCategorias } from "@/hooks/useCategorias";
 import { useReceita, useUpdateReceita } from "@/hooks/useReceitas";
 
-export const Route = createFileRoute("/_authenticated/editar-receita/$id")({
+export const Route = createFileRoute("/_authenticated/editar-receita/")({
   head: () => ({ meta: [{ title: "Editar receita — Colher & Casa" }] }),
   component: EditarReceitaPage,
 });
