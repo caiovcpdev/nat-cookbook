@@ -24,7 +24,7 @@ export function TopBar() {
           <span className="grid h-9 w-9 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-primary">
             <ChefHat className="h-5 w-5" />
           </span>
-          <span className="font-display text-lg tracking-tight sm:text-xl">Colher &amp; Casa</span>
+          <span className="font-display text-lg tracking-tight sm:text-xl">Livro Receitas da Nat</span>
         </Link>
 
         <nav className="ml-auto hidden items-center gap-1 sm:flex">

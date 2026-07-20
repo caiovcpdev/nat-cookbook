@@ -5,9 +5,9 @@
 // ============================================================================
 
 export enum Dificuldade {
-  Facil = 0,
-  Medio = 1,
-  Dificil = 2,
+  Facil = 1,
+  Medio = 2,
+  Dificil = 3,
 }
 
 export interface Categoria {
@@ -19,7 +19,7 @@ export interface Categoria {
 export interface Ingrediente {
   id?: number;
   nome: string;
-  quantidade?: string;
+  quantidade?: string | "1";
 }
 
 export interface Passo {

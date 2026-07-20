@@ -10,9 +10,12 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
 import { STORAGE_KEYS } from "@/constants";
 
-const BASE_URL =
-  (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, "") ||
-  "https://localhost:7104";
+// const BASE_URL =
+//   (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, "") || "http://nat-cookbook.runasp.net";
+
+
+const BASE_URL = "http://nat-cookbook.runasp.net";
+
 
 export const api: AxiosInstance = axios.create({
   baseURL: BASE_URL,

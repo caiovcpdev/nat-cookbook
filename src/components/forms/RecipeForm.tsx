@@ -23,7 +23,7 @@ const schema = z.object({
   categoriaId: z.coerce.number().int().min(1, "Selecione uma categoria"),
   tempoPreparo: z.coerce.number().int().min(1, "Tempo em minutos").max(24 * 60),
   porcoes: z.coerce.number().int().min(1).max(200),
-  dificuldade: z.coerce.number().int().min(0).max(2),
+  dificuldade: z.coerce.number().int().min(1).max(3),
   imagem: z
     .string()
     .trim()
@@ -35,7 +35,7 @@ const schema = z.object({
     .array(
       z.object({
         nome: z.string().trim().min(1, "Ingrediente vazio"),
-        quantidade: z.string().trim().max(80).optional().or(z.literal("")),
+        quantidade: z.string().trim().min(1, "Informe a quantidade").max(80).or(z.literal("")),
       }),
     )
     .min(1, "Adicione ao menos um ingrediente"),
@@ -98,10 +98,12 @@ export function RecipeForm({
       imagem: values.imagem || undefined,
       ingredientes: values.ingredientes.map((i) => ({
         nome: i.nome,
-        quantidade: i.quantidade || undefined,
+        quantidade: i.quantidade, //|| undefined
       })),
       passos: values.passos.map((p, idx) => ({ descricao: p.descricao, ordem: idx + 1 })),
     };
+    console.log("=== PAYLOAD ===");
+    console.log(JSON.stringify(payload, null, 2));
     return onSubmit(payload);
   });
 
@@ -224,11 +226,11 @@ export function RecipeForm({
               >
                 <Trash2 className="h-4 w-4" />
               </Button>
-              <Input
+              {/* <Input
                 placeholder="Qtd. (opcional)"
                 className="col-span-2 sm:hidden"
                 {...register(`ingredientes.${idx}.quantidade` as const)}
-              />
+              /> */}
             </motion.div>
           ))}
         </AnimatePresence>
