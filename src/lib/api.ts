@@ -14,7 +14,7 @@ import { STORAGE_KEYS } from "@/constants";
 //   (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, "") || "http://nat-cookbook.runasp.net";
 
 
-const BASE_URL = "http://nat-cookbook.runasp.net";
+const BASE_URL = "https://nat-cookbook.runasp.net";
 
 
 export const api: AxiosInstance = axios.create({
